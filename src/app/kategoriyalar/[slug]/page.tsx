@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { ChevronRight } from "lucide-react";
 
 import { CandidateCard } from "@/components/cards";
+import { Reveal } from "@/components/reveal";
 import { categoryIcon, EmptyState, Eyebrow, IconChip } from "@/components/ui";
 import { getCategories, getCategoryBySlug, searchCandidates } from "@/lib/queries";
 import { siteConfig } from "@/lib/site";
@@ -60,7 +61,7 @@ export default async function CategoryPage(
         <span className="text-ink-2">{category.name}</span>
       </nav>
 
-      <header className="mt-6 flex items-start gap-4">
+      <header className="yw-enter mt-6 flex items-start gap-4">
         <IconChip icon={Icon} size="lg" />
         <div className="min-w-0">
           <Eyebrow variant="plain">Kategoriya</Eyebrow>
@@ -90,11 +91,9 @@ export default async function CategoryPage(
       ) : (
         <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {results.items.map((candidate, index) => (
-            <CandidateCard
-              key={candidate.id}
-              candidate={candidate}
-              priority={index < 4}
-            />
+            <Reveal key={candidate.id} delay={(index % 4) * 65}>
+              <CandidateCard candidate={candidate} priority={index < 4} />
+            </Reveal>
           ))}
         </div>
       )}

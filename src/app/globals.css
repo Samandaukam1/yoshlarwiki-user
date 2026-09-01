@@ -323,3 +323,149 @@ body {
 [data-theme="dark"] .yw-watermark {
   opacity: 0.06;
 }
+
+/* ==========================================================================
+   Animatsiyalar
+   Barchasi prefers-reduced-motion bilan o'chiriladi (yuqoridagi qoidaga qarang).
+   ========================================================================== */
+
+@keyframes yw-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes yw-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes yw-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes yw-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Sahifa yuklanganda darhol ishga tushadigan kirish animatsiyasi. */
+.yw-enter {
+  animation: yw-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.yw-enter-pop {
+  animation: yw-pop-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Skroll paytida ko'rinadigan bloklar. */
+.yw-reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.yw-reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sarlavha ostidagi ko'k chiziq chizilishi. */
+.yw-underline::after {
+  transform-origin: left center;
+  animation: yw-draw 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.45s backwards;
+}
+
+/* Portret kartalari ustiga borilganda mayin ko'tarilish. */
+.yw-photo {
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .yw-photo:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--yw-shadow-lg);
+  }
+}
+
+/* Tugmalar bosilganda mayin javob. */
+.yw-press {
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.yw-press:active {
+  transform: scale(0.975);
+}
+
+/* Reduced-motion: kirish animatsiyalari o'chadi, kontent darhol ko'rinadi. */
+@media (prefers-reduced-motion: reduce) {
+  .yw-enter,
+  .yw-enter-pop,
+  .yw-underline::after {
+    animation: none;
+  }
+
+  .yw-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Konteyner ko'ringanda bolalar navbat bilan ochiladi.
+   Gorizontal skrolldagi ro'yxatlar uchun zarur: u yerda har bir element
+   alohida kuzatilsa, ekrandan tashqaridagilari hech qachon ochilmaydi. */
+.yw-stagger > * {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.yw-stagger[data-visible="true"] > * {
+  opacity: 1;
+  transform: none;
+}
+
+.yw-stagger > *:nth-child(1) { transition-delay: 0ms; }
+.yw-stagger > *:nth-child(2) { transition-delay: 70ms; }
+.yw-stagger > *:nth-child(3) { transition-delay: 140ms; }
+.yw-stagger > *:nth-child(4) { transition-delay: 210ms; }
+.yw-stagger > *:nth-child(5) { transition-delay: 280ms; }
+.yw-stagger > *:nth-child(6) { transition-delay: 350ms; }
+.yw-stagger > *:nth-child(7) { transition-delay: 420ms; }
+.yw-stagger > *:nth-child(n + 8) { transition-delay: 490ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .yw-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Users } from "lucide-react";
 
 import { CandidateCard, CandidateCardSkeleton } from "@/components/cards";
 import { FilterBar } from "@/components/directory/filter-bar";
+import { Reveal } from "@/components/reveal";
 import { EmptyState, Eyebrow } from "@/components/ui";
 import { getCategories, getRegions, searchCandidates } from "@/lib/queries";
 
@@ -144,11 +145,9 @@ async function Results({
       </p>
       <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {results.items.map((candidate, index) => (
-          <CandidateCard
-            key={candidate.id}
-            candidate={candidate}
-            priority={index < 4}
-          />
+          <Reveal key={candidate.id} delay={(index % 4) * 65}>
+            <CandidateCard candidate={candidate} priority={index < 4} />
+          </Reveal>
         ))}
       </div>
       <Pagination page={page} total={results.total} params={urlParams} />
@@ -178,7 +177,7 @@ export default async function YoshlarPage(props: PageProps<"/yoshlar">) {
 
   return (
     <div className="yw-container py-10 lg:py-14">
-      <header className="max-w-[640px]">
+      <header className="yw-enter max-w-[640px]">
         <Eyebrow>Yoshlar</Eyebrow>
         <h1 className="mt-4 text-[32px] font-extrabold leading-[1.1] tracking-[-0.03em] text-ink lg:text-[44px]">
           Iqtidorli yoshlarni <span className="text-accent-text">kashf eting</span>
@@ -188,7 +187,7 @@ export default async function YoshlarPage(props: PageProps<"/yoshlar">) {
         </p>
       </header>
 
-      <div className="mt-8">
+      <div className="yw-enter mt-8" style={{ animationDelay: "120ms" }}>
         <FilterBar categories={categories} regions={regions} />
       </div>
 

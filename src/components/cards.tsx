@@ -14,9 +14,9 @@ export function CategoryTile({ category }: { category: Category }) {
   return (
     <Link
       href={`/kategoriyalar/${category.slug}`}
-      className="flex flex-col items-center gap-2.5 rounded-card border border-line bg-surface px-2.5 py-4 text-center transition-colors hover:border-line-strong hover:bg-surface-hover"
+      className="group flex h-full flex-col items-center gap-2.5 rounded-card border border-line bg-surface px-2.5 py-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:bg-surface-hover hover:shadow-yw"
     >
-      <span className="grid size-10 place-items-center rounded-xl bg-accent-soft text-accent-soft-fg">
+      <span className="grid size-10 place-items-center rounded-xl bg-accent-soft text-accent-soft-fg transition-transform duration-300 group-hover:scale-110">
         <CategoryIcon name={category.icon} className="size-[19px]" />
       </span>
       <span className="text-[12px] font-medium leading-[1.35] text-ink-2">
@@ -37,9 +37,9 @@ export function CategoryCard({
   return (
     <Link
       href={`/kategoriyalar/${category.slug}`}
-      className="group flex flex-col rounded-card border border-line bg-surface p-5 transition-all hover:border-line-strong hover:shadow-yw"
+      className="group flex h-full flex-col rounded-card border border-line bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-yw"
     >
-      <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent-soft-fg">
+      <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent-soft-fg transition-transform duration-300 group-hover:scale-110">
         <CategoryIcon name={category.icon} className="size-[21px]" />
       </span>
       <h3 className="mt-3.5 text-[15px] font-bold leading-snug text-ink">
@@ -76,7 +76,7 @@ export function CandidateCard({
   return (
     <Link
       href={`/yoshlar/${candidate.slug}`}
-      className="group flex flex-col overflow-hidden rounded-card border border-line bg-surface transition-all hover:border-line-strong hover:shadow-yw"
+      className="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-yw-lg"
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-surface-2">
         {candidate.portrait_url ? (

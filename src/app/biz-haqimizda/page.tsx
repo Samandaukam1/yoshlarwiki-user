@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { StatsBar } from "@/components/stats";
+import { Reveal } from "@/components/reveal";
 import { ButtonLink, Eyebrow, IconChip } from "@/components/ui";
 import { getCategories, getPublicSetting, getStats } from "@/lib/queries";
 import { siteConfig } from "@/lib/site";
@@ -57,7 +58,7 @@ export default async function AboutPage() {
   return (
     <div className="yw-container py-10 lg:py-16">
       {/* --------------------------- Kirish --------------------------- */}
-      <header className="max-w-[680px]">
+      <header className="yw-enter max-w-[680px]">
         <Eyebrow>Biz haqimizda</Eyebrow>
         <h1 className="mt-5 text-[32px] font-extrabold leading-[1.1] tracking-[-0.03em] text-ink lg:text-[46px]">
           Yoshlar haqida.{" "}
@@ -77,6 +78,7 @@ export default async function AboutPage() {
 
       {/* ---------------------- Qanday ishlaydi ----------------------- */}
       <section id="qanday-ishlaydi" className="mt-16 scroll-mt-24 lg:mt-24">
+        <Reveal>
         <h2 className="text-[24px] font-bold tracking-[-0.02em] text-ink lg:text-[30px]">
           Qanday ishlaydi?
         </h2>
@@ -84,12 +86,15 @@ export default async function AboutPage() {
           Profil yaratish jarayoni to&apos;rt bosqichdan iborat. Har bir profil
           tahririyat tekshiruvidan oʻtadi.
         </p>
+        </Reveal>
 
         <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, index) => (
-            <li
+            <Reveal
+              as="li"
               key={step.title}
-              className="rounded-card border border-line bg-surface p-5"
+              delay={index * 80}
+              className="group rounded-card border border-line bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-yw"
             >
               <div className="flex items-center justify-between">
                 <IconChip icon={step.icon} />
@@ -103,13 +108,13 @@ export default async function AboutPage() {
               <p className="mt-2 text-[13px] leading-relaxed text-ink-2">
                 {step.text}
               </p>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </section>
 
       {/* ------------------------ Yo'nalishlar ------------------------ */}
-      <section className="mt-16 lg:mt-24">
+      <Reveal as="section" className="mt-16 lg:mt-24">
         <h2 className="text-[24px] font-bold tracking-[-0.02em] text-ink lg:text-[30px]">
           Yoʻnalishlar
         </h2>
@@ -122,14 +127,14 @@ export default async function AboutPage() {
             <li key={category.id}>
               <Link
                 href={`/kategoriyalar/${category.slug}`}
-                className="inline-flex rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-medium text-ink-2 transition-colors hover:border-accent hover:text-accent-text"
+                className="inline-flex rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-medium text-ink-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent-text"
               >
                 {category.name}
               </Link>
             </li>
           ))}
         </ul>
-      </section>
+      </Reveal>
 
       {/* ---------------------- Tamoyillar ---------------------------- */}
       <section className="mt-16 lg:mt-24">
@@ -153,24 +158,25 @@ export default async function AboutPage() {
               title: "Tuzilgan tarkib",
               text: "Taʼlim, faoliyat, yutuq va loyihalar alohida bo‘limlarda saqlanadi.",
             },
-          ].map((item) => (
-            <div
+          ].map((item, index) => (
+            <Reveal
               key={item.title}
-              className="rounded-card border border-line bg-surface p-5"
+              delay={index * 80}
+              className="rounded-card border border-line bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-yw"
             >
               <IconChip icon={item.icon} />
               <h3 className="mt-4 text-[15px] font-bold text-ink">{item.title}</h3>
               <p className="mt-2 text-[13px] leading-relaxed text-ink-2">
                 {item.text}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* --------------------------- Aloqa ---------------------------- */}
       <section id="aloqa" className="mt-16 scroll-mt-24 lg:mt-24">
-        <div className="relative overflow-hidden rounded-panel border border-line bg-surface px-6 py-10 sm:px-10 lg:py-12">
+        <Reveal className="relative overflow-hidden rounded-panel border border-line bg-surface px-6 py-10 sm:px-10 lg:py-12">
           <div className="yw-apply-bg" aria-hidden />
           <div className="relative grid gap-8 lg:grid-cols-2 lg:items-center">
             <div>
@@ -213,13 +219,13 @@ export default async function AboutPage() {
             </div>
 
             <div className="lg:justify-self-end">
-              <ButtonLink href="/ariza" size="lg">
+              <ButtonLink href="/ariza" size="lg" className="yw-press">
                 Ariza qoldirish
                 <ArrowRight className="size-[18px]" />
               </ButtonLink>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );

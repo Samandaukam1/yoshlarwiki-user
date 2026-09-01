@@ -1,4 +1,6 @@
 import Link from "next/link";
+
+import { CountUp, Reveal } from "./reveal";
 import {
   Award,
   ChevronRight,
@@ -16,10 +18,10 @@ import type { PublicStats } from "@/lib/queries";
  * Haqiqiy sonni dizayndagi ko'rinishga yaqinlashtiradi.
  * Kichik sonlar aniq ko'rsatiladi — soxta "2500+" chiqmaydi.
  */
-export function formatStat(value: number): string {
-  if (value < 100) return String(value);
-  if (value < 1000) return `${Math.floor(value / 50) * 50}+`;
-  return `${Math.floor(value / 500) * 500}+`;
+export function formatStat(value: number): { value: number; suffix: string } {
+  if (value < 100) return { value, suffix: "" };
+  if (value < 1000) return { value: Math.floor(value / 50) * 50, suffix: "+" };
+  return { value: Math.floor(value / 500) * 500, suffix: "+" };
 }
 
 type StatItem = {
@@ -46,11 +48,13 @@ export function StatsBar({
   className?: string;
 }) {
   return (
-    <div
+    <Reveal
       className={`rounded-panel border border-line bg-surface shadow-yw ${className}`}
     >
       <dl className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-        {STAT_ITEMS.map((item, index) => (
+        {STAT_ITEMS.map((item, index) => {
+          const stat = formatStat(stats[item.key]);
+          return (
           <div
             key={item.key}
             className={`flex items-center gap-3.5 px-5 py-5 lg:px-6 ${
@@ -63,15 +67,16 @@ export function StatsBar({
           >
             <IconChip icon={item.icon} />
             <div className="min-w-0">
-              <dd className="text-[21px] font-bold leading-tight tracking-[-0.01em] text-ink">
-                {formatStat(stats[item.key])}
+              <dd className="text-[21px] font-bold leading-tight tracking-[-0.01em] text-ink tabular-nums">
+                <CountUp value={stat.value} suffix={stat.suffix} />
               </dd>
               <dt className="truncate text-[12.5px] text-ink-2">{item.label}</dt>
             </div>
           </div>
-        ))}
+          );
+        })}
       </dl>
-    </div>
+    </Reveal>
   );
 }
 
@@ -80,7 +85,9 @@ export function StatsList({ stats }: { stats: PublicStats }) {
   return (
     <div className="overflow-hidden rounded-card border border-line bg-surface">
       <ul>
-        {STAT_ITEMS.map((item, index) => (
+        {STAT_ITEMS.map((item, index) => {
+          const stat = formatStat(stats[item.key]);
+          return (
           <li key={item.key}>
             <Link
               href={item.href}
@@ -90,8 +97,8 @@ export function StatsList({ stats }: { stats: PublicStats }) {
             >
               <IconChip icon={item.icon} />
               <span className="min-w-0 flex-1">
-                <span className="block text-[19px] font-bold leading-tight text-ink">
-                  {formatStat(stats[item.key])}
+                <span className="block text-[19px] font-bold leading-tight text-ink tabular-nums">
+                  <CountUp value={stat.value} suffix={stat.suffix} />
                 </span>
                 <span className="block truncate text-[13px] text-ink-2">
                   {item.label}
@@ -103,7 +110,8 @@ export function StatsList({ stats }: { stats: PublicStats }) {
               />
             </Link>
           </li>
-        ))}
+          );
+        })}
       </ul>
     </div>
   );

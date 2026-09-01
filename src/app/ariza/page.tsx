@@ -32,12 +32,20 @@ export default async function ArizaPage() {
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Chap ustun — matn */}
           <div className="max-w-[520px]">
-            <Eyebrow>Ariza topshirish</Eyebrow>
-            <h1 className="mt-5 text-[32px] font-extrabold leading-[1.12] tracking-[-0.03em] text-ink sm:text-[38px] lg:text-[42px]">
+            <span className="yw-enter inline-block" style={{ animationDelay: "60ms" }}>
+              <Eyebrow>Ariza topshirish</Eyebrow>
+            </span>
+            <h1
+              style={{ animationDelay: "160ms" }}
+              className="yw-enter mt-5 text-[32px] font-extrabold leading-[1.12] tracking-[-0.03em] text-ink sm:text-[38px] lg:text-[42px]"
+            >
               Yoshlar ensiklopediyasiga{" "}
               <span className="text-accent-text">ariza qoldiring</span>
             </h1>
-            <p className="mt-5 text-[15px] leading-[1.75] text-ink-2">
+            <p
+              style={{ animationDelay: "280ms" }}
+              className="yw-enter mt-5 text-[15px] leading-[1.75] text-ink-2"
+            >
               Oʻzingiz haqingizdagi maʼlumotlarni biz bilan boʻlishing va boshqa
               yoshlar uchun ilhom manbaiga aylaning.
             </p>
@@ -47,8 +55,12 @@ export default async function ArizaPage() {
                 "Arizani toʻldirish 2 daqiqa vaqt oladi",
                 "Maʼlumotlaringiz faqat tahririyat tomonidan koʻriladi",
                 "Tasdiqlangach profilingiz saytda eʼlon qilinadi",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
+              ].map((item, index) => (
+                <li
+                  key={item}
+                  style={{ animationDelay: `${380 + index * 90}ms` }}
+                  className="yw-enter flex items-start gap-3"
+                >
                   <span
                     aria-hidden
                     className="mt-[7px] size-1.5 shrink-0 rounded-full bg-accent-text"
@@ -60,7 +72,10 @@ export default async function ArizaPage() {
           </div>
 
           {/* O'ng ustun — forma */}
-          <div className="lg:justify-self-end lg:w-full lg:max-w-[540px]">
+          <div
+            style={{ animationDelay: "220ms" }}
+            className="yw-enter lg:w-full lg:max-w-[540px] lg:justify-self-end"
+          >
             <ApplicationForm />
           </div>
         </div>

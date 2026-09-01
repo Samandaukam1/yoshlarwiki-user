@@ -18,6 +18,7 @@ import {
 import { ProfileNav } from "@/components/candidate/profile-nav";
 import { VideoButton } from "@/components/candidate/video-button";
 import { ViewTracker } from "@/components/candidate/view-tracker";
+import { Reveal } from "@/components/reveal";
 import { SOCIAL_LABELS, socialIcon } from "@/components/social-icons";
 import { Eyebrow, SectionHeading } from "@/components/ui";
 import { getCandidateBySlug, getPublishedSlugs } from "@/lib/queries";
@@ -154,28 +155,40 @@ export default async function CandidatePage(
           <div className="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)_186px] lg:gap-10">
             {/* Matn ustuni */}
             <div className="relative z-10 pb-8 pt-10 lg:pb-16 lg:pt-16">
-              <Eyebrow variant="plain">Yoshlar ensiklopediyasi</Eyebrow>
+              <div className="yw-enter" style={{ animationDelay: "60ms" }}>
+                <Eyebrow variant="plain">Yoshlar ensiklopediyasi</Eyebrow>
+              </div>
 
-              <h1 className="mt-3 max-w-[9ch] text-[38px] font-extrabold leading-[1.02] tracking-[-0.035em] text-ink sm:text-[52px] lg:text-[64px]">
+              <h1
+                style={{ animationDelay: "150ms" }}
+                className="yw-enter mt-3 max-w-[9ch] text-[38px] font-extrabold leading-[1.02] tracking-[-0.035em] text-ink sm:text-[52px] lg:text-[64px]">
                 {candidate.full_name}
               </h1>
 
               {candidate.title ? (
-                <p className="mt-3 text-[17px] font-semibold text-accent-text lg:text-[19px]">
+                <p
+                  style={{ animationDelay: "260ms" }}
+                  className="yw-enter mt-3 text-[17px] font-semibold text-accent-text lg:text-[19px]"
+                >
                   {candidate.title}
                 </p>
               ) : null}
 
               {candidate.intro ? (
-                <p className="mt-4 max-w-[58%] text-[13.5px] leading-[1.75] text-ink-2 sm:max-w-[420px] lg:text-[14px]">
+                <p
+                  style={{ animationDelay: "350ms" }}
+                  className="yw-enter mt-4 max-w-[58%] text-[13.5px] leading-[1.75] text-ink-2 sm:max-w-[420px] lg:text-[14px]">
                   {candidate.intro}
                 </p>
               ) : null}
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-4">
+              <div
+                style={{ animationDelay: "440ms" }}
+                className="yw-enter mt-7 flex flex-wrap items-center gap-x-7 gap-y-4"
+              >
                 <a
                   href="#men-haqimda"
-                  className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-accent px-6 text-[14px] font-semibold text-accent-fg transition-colors hover:bg-accent-hover"
+                  className="yw-press inline-flex h-11 items-center gap-2 rounded-[10px] bg-accent px-6 text-[14px] font-semibold text-accent-fg transition-colors hover:bg-accent-hover"
                 >
                   Batafsil maʼlumot
                   <ArrowUpRight className="size-4" />
@@ -186,7 +199,10 @@ export default async function CandidatePage(
               </div>
 
               {candidate.social_links.length > 0 ? (
-                <ul className="mt-8 flex items-center gap-6">
+                <ul
+                  style={{ animationDelay: "540ms" }}
+                  className="yw-enter mt-8 flex items-center gap-6"
+                >
                   {candidate.social_links.map((link) => {
                     const Icon = socialIcon(link.platform);
                     if (!Icon) return null;
@@ -197,7 +213,7 @@ export default async function CandidatePage(
                           target="_blank"
                           rel="noopener noreferrer me"
                           aria-label={SOCIAL_LABELS[link.platform] ?? link.platform}
-                          className="block text-ink-3 transition-colors hover:text-accent-text"
+                          className="block text-ink-3 transition-all duration-300 hover:-translate-y-0.5 hover:text-accent-text"
                         >
                           <Icon className="size-[22px]" />
                         </a>
@@ -210,7 +226,7 @@ export default async function CandidatePage(
 
             {/* Portret */}
             {candidate.portrait_url ? (
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-[46%] max-w-[260px] sm:max-w-[320px] lg:static lg:w-auto lg:max-w-none">
+              <div className="yw-enter pointer-events-none absolute inset-y-0 right-0 w-[46%] max-w-[260px] sm:max-w-[320px] lg:static lg:w-auto lg:max-w-none">
                 <div className="relative h-full min-h-[320px] lg:h-[560px]">
                   <Image
                     src={candidate.portrait_url}
@@ -243,7 +259,7 @@ export default async function CandidatePage(
       {/* ====================== ASOSIY MA'LUMOTLAR ==================== */}
       {facts.length > 0 ? (
         <section className="yw-container">
-          <div className="rounded-panel border border-line bg-surface">
+          <Reveal className="rounded-panel border border-line bg-surface">
             <dl className="grid lg:grid-cols-5">
               {facts.map((fact, index) => (
                 <div
@@ -265,7 +281,7 @@ export default async function CandidatePage(
                 </div>
               ))}
             </dl>
-          </div>
+          </Reveal>
         </section>
       ) : null}
 
@@ -276,7 +292,8 @@ export default async function CandidatePage(
               ikki mustaqil ustun — dizayndagidek qatorlar tekislanmaydi. */}
           <div className="contents lg:block lg:space-y-14">
           {/* --- Men haqimda --- */}
-          <section
+          <Reveal
+            as="section"
             id="men-haqimda"
             className="order-1 scroll-mt-24 lg:order-none"
           >
@@ -305,11 +322,11 @@ export default async function CandidatePage(
                 ) : null}
               </div>
             ) : null}
-          </section>
+          </Reveal>
 
           {/* --- Yutuqlari (desktopda chap ustun, mobilda oxirida) --- */}
           {candidate.achievements.length > 0 ? (
-            <section
+            <Reveal as="section"
               id="yutuqlar"
               className="order-4 scroll-mt-24 lg:order-none"
             >
@@ -335,7 +352,7 @@ export default async function CandidatePage(
                   </li>
                 ))}
               </ul>
-            </section>
+            </Reveal>
           ) : null}
 
           </div>
@@ -343,7 +360,7 @@ export default async function CandidatePage(
           <div className="contents lg:block lg:space-y-14">
           {/* --- Ta'limi --- */}
           {candidate.education.length > 0 ? (
-            <section
+            <Reveal as="section"
               id="talim"
               className="order-2 scroll-mt-24 lg:order-none"
             >
@@ -376,12 +393,12 @@ export default async function CandidatePage(
                   </div>
                 ))}
               </div>
-            </section>
+            </Reveal>
           ) : null}
 
           {/* --- Faoliyat yo'li --- */}
           {candidate.experience.length > 0 ? (
-            <section
+            <Reveal as="section"
               id="faoliyat"
               className="order-3 scroll-mt-24 lg:order-none"
             >
@@ -419,7 +436,7 @@ export default async function CandidatePage(
                   </li>
                 ))}
               </ol>
-            </section>
+            </Reveal>
           ) : null}
           </div>
         </div>
@@ -428,8 +445,13 @@ export default async function CandidatePage(
       {/* ========================= LOYIHALARI ========================= */}
       {candidate.projects.length > 0 ? (
         <section id="loyihalar" className="yw-container mt-14 scroll-mt-24 lg:mt-20">
-          <SectionHeading title="Loyihalari" />
-          <ul className="yw-scroll-x mt-5 flex gap-4 pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
+          <Reveal>
+            <SectionHeading title="Loyihalari" />
+          </Reveal>
+          <Reveal
+            as="ul"
+            className="yw-scroll-x yw-stagger mt-5 flex gap-4 pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0"
+          >
             {candidate.projects.map((project) => {
               const Wrapper = project.url ? "a" : "div";
               return (
@@ -445,7 +467,7 @@ export default async function CandidatePage(
                           rel: "noopener noreferrer",
                         }
                       : {})}
-                    className="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-all hover:border-line-strong hover:shadow-yw"
+                    className="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-yw-lg"
                   >
                     <div className="relative aspect-[16/10] bg-surface-2">
                       {project.image_url ? (
@@ -481,19 +503,24 @@ export default async function CandidatePage(
                 </li>
               );
             })}
-          </ul>
+          </Reveal>
         </section>
       ) : null}
 
       {/* ========================== GALEREYA ========================== */}
       {candidate.media.length > 0 ? (
         <section id="galereya" className="yw-container mt-14 scroll-mt-24 lg:mt-20">
-          <SectionHeading title="Galereya" />
-          <ul className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <Reveal>
+            <SectionHeading title="Galereya" />
+          </Reveal>
+          <Reveal
+            as="ul"
+            className="yw-stagger mt-5 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+          >
             {candidate.media.map((item) => (
               <li
                 key={item.id}
-                className="relative aspect-[4/3] overflow-hidden rounded-card border border-line bg-surface-2"
+                className="yw-photo relative aspect-[4/3] overflow-hidden rounded-card border border-line bg-surface-2"
               >
                 {item.kind === "image" ? (
                   <Image
@@ -515,7 +542,7 @@ export default async function CandidatePage(
                 )}
               </li>
             ))}
-          </ul>
+          </Reveal>
         </section>
       ) : null}
 

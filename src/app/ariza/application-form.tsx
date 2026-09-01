@@ -69,8 +69,11 @@ export function ApplicationForm() {
 
   if (state.status === "success") {
     return (
-      <div className="rounded-panel border border-line bg-surface p-8 text-center shadow-yw lg:p-10">
-        <span className="mx-auto grid size-14 place-items-center rounded-full bg-success-soft text-success">
+      <div className="yw-enter-pop rounded-panel border border-line bg-surface p-8 text-center shadow-yw lg:p-10">
+        <span
+          style={{ animationDelay: "150ms" }}
+          className="yw-enter-pop mx-auto grid size-14 place-items-center rounded-full bg-success-soft text-success"
+        >
           <CheckCircle2 className="size-7" strokeWidth={1.8} />
         </span>
         <h2 className="mt-5 text-[22px] font-bold text-ink">
@@ -102,7 +105,7 @@ export function ApplicationForm() {
     <form
       action={formAction}
       noValidate
-      className="rounded-panel border border-line bg-surface p-6 shadow-yw sm:p-8"
+      className="rounded-panel border border-line bg-surface p-6 shadow-yw transition-shadow duration-300 hover:shadow-yw-lg sm:p-8"
     >
       <h2 className="text-[24px] font-bold tracking-[-0.02em] text-ink sm:text-[26px]">
         Ariza formasi
@@ -236,7 +239,7 @@ export function ApplicationForm() {
             {GENDERS.map((option) => (
               <label
                 key={option.value}
-                className="group relative flex h-12 cursor-pointer items-center justify-center gap-2 rounded-[10px] border border-line bg-surface text-[14px] font-medium text-ink transition-colors hover:bg-surface-hover has-checked:border-accent has-checked:bg-accent-soft has-checked:text-accent-soft-fg"
+                className="group relative flex h-12 cursor-pointer items-center justify-center gap-2 rounded-[10px] border border-line bg-surface text-[14px] font-medium text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-surface-hover has-checked:border-accent has-checked:bg-accent-soft has-checked:text-accent-soft-fg"
               >
                 <input
                   type="radio"
@@ -264,7 +267,7 @@ export function ApplicationForm() {
             {AGE_RANGES.map((option) => (
               <label
                 key={option.value}
-                className="flex h-12 cursor-pointer items-center justify-center rounded-[10px] border border-line bg-surface text-[14px] font-medium tabular-nums text-ink transition-colors hover:bg-surface-hover has-checked:border-accent has-checked:bg-accent-soft has-checked:text-accent-soft-fg"
+                className="flex h-12 cursor-pointer items-center justify-center rounded-[10px] border border-line bg-surface text-[14px] font-medium tabular-nums text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-surface-hover has-checked:border-accent has-checked:bg-accent-soft has-checked:text-accent-soft-fg"
               >
                 <input
                   type="radio"
@@ -317,7 +320,7 @@ export function ApplicationForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-7 inline-flex h-[52px] w-full items-center justify-center gap-2.5 rounded-[10px] bg-accent text-[15px] font-semibold text-accent-fg transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70"
+        className="yw-press mt-7 inline-flex h-[52px] w-full items-center justify-center gap-2.5 rounded-[10px] bg-accent text-[15px] font-semibold text-accent-fg transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70"
       >
         {pending ? (
           <>

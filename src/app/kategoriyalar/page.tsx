@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { CategoryCard } from "@/components/cards";
+import { Reveal } from "@/components/reveal";
 import { EmptyState, Eyebrow } from "@/components/ui";
 import { getCategories, getCategoryCounts } from "@/lib/queries";
 
@@ -21,7 +22,7 @@ export default async function CategoriesPage() {
 
   return (
     <div className="yw-container py-10 lg:py-16">
-      <header className="max-w-[640px]">
+      <header className="yw-enter max-w-[640px]">
         <Eyebrow>Kategoriyalar</Eyebrow>
         <h1 className="mt-4 text-[32px] font-extrabold leading-[1.1] tracking-[-0.03em] text-ink lg:text-[44px]">
           Yoʻnalish boʻyicha{" "}
@@ -42,12 +43,10 @@ export default async function CategoriesPage() {
         </div>
       ) : (
         <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {categories.map((category) => (
-            <CategoryCard
-              key={category.id}
-              category={category}
-              count={counts[category.slug] ?? 0}
-            />
+          {categories.map((category, index) => (
+            <Reveal key={category.id} delay={(index % 4) * 60}>
+              <CategoryCard category={category} count={counts[category.slug] ?? 0} />
+            </Reveal>
           ))}
         </div>
       )}

@@ -64,7 +64,7 @@ export function Header() {
 
       <header className="sticky top-0 z-50 bg-bg/85 backdrop-blur-md">
         <div className="yw-container flex h-[72px] items-center gap-4">
-          <Logo />
+          <Logo priority />
 
           <nav
             aria-label="Asosiy menyu"

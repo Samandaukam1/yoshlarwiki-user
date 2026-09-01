@@ -51,17 +51,20 @@ function Portrait({
   sizes,
   priority = false,
   style,
+  delay = 0,
 }: {
   portrait: HeroPortrait;
   className?: string;
   sizes: string;
   priority?: boolean;
   style?: React.CSSProperties;
+  /** kirish animatsiyasi kechikishi, ms */
+  delay?: number;
 }) {
   return (
     <div
-      style={style}
-      className={`relative overflow-hidden rounded-[14px] bg-surface-2 ${className}`}
+      style={{ ...style, animationDelay: `${delay}ms` }}
+      className={`yw-enter-pop yw-photo relative overflow-hidden rounded-[14px] bg-surface-2 ${className}`}
     >
       <Image
         src={portrait.image_url}
@@ -88,12 +91,13 @@ export function HeroMosaicDesktop({
         {GHOST_SLOTS.map((slot, index) => (
           <div
             key={`ghost-${index}`}
-            className="absolute rounded-[14px] bg-ghost-card"
+            className="yw-enter-pop absolute rounded-[14px] bg-ghost-card"
             style={{
               left: `${slot.left}%`,
               width: `${slot.width}%`,
               top: "-2%",
               height: "16%",
+              animationDelay: `${index * 40}ms`,
             }}
           />
         ))}
@@ -115,7 +119,8 @@ export function HeroMosaicDesktop({
                 portrait={portrait}
                 className="size-full"
                 sizes="(min-width: 1280px) 140px, 12vw"
-                priority={index < 4}
+                priority={index < 8}
+                delay={160 + index * 55}
               />
             </div>
           );
@@ -152,6 +157,7 @@ export function HeroMosaicMobile({ portraits }: { portraits: HeroPortrait[] }) {
               style={{ aspectRatio: row.ratios[itemIndex] }}
               sizes="(min-width: 640px) 160px, 24vw"
               priority={rowIndex === 0}
+              delay={rowIndex * 110 + itemIndex * 60}
             />
           ))}
         </div>
