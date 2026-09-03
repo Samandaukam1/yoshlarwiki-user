@@ -63,7 +63,7 @@ export function Header() {
       </a>
 
       <header className="sticky top-0 z-50 bg-bg/85 backdrop-blur-md">
-        <div className="yw-container flex h-[72px] items-center gap-4">
+        <div className="yw-container flex h-20 items-center gap-4">
           <Logo priority />
 
           <nav

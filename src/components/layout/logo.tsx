@@ -18,8 +18,8 @@ export function Logo({
   size?: "sm" | "md";
   priority?: boolean;
 }) {
-  const shortHeight = size === "sm" ? "h-7" : "h-8";
-  const horizontalHeight = size === "sm" ? "h-8" : "h-9";
+  const shortHeight = size === "sm" ? "h-7" : "h-16";
+  const horizontalHeight = size === "sm" ? "h-8" : "h-[72px]";
 
   return (
     <Link
