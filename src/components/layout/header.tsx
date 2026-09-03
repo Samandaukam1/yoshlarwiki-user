@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Logo } from "./logo";
 import { SearchDialog } from "./search-dialog";
 import { ThemeToggle } from "@/components/theme";
-import { navigation, siteConfig } from "@/lib/site";
+import { navigation } from "@/lib/site";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -96,9 +96,8 @@ export function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-0.5 sm:gap-1.5 lg:ml-8 lg:gap-2">
-            {/* Mavzu almashtirgich mobil menyu ichida — dizayndagi sarlavha
-                qatorida faqat qidiruv, "Kirish" va gamburger bor. */}
-            <ThemeToggle className="hidden lg:grid" />
+            {/* Kecha/kunduz rejimi qidiruv yonida — barcha ekran o'lchamlarida. */}
+            <ThemeToggle className="shrink-0" />
 
             <button
               type="button"
@@ -108,13 +107,6 @@ export function Header() {
             >
               <Search className="size-[19px]" strokeWidth={1.9} />
             </button>
-
-            <Link
-              href={siteConfig.adminUrl}
-              className="inline-flex h-9 shrink-0 items-center rounded-[10px] bg-accent px-4 text-[14px] font-semibold text-accent-fg transition-colors hover:bg-accent-hover sm:px-5 lg:ml-1"
-            >
-              Kirish
-            </Link>
 
             <button
               type="button"
@@ -175,18 +167,6 @@ export function Header() {
                 );
               })}
             </nav>
-
-            <Link
-              href={siteConfig.adminUrl}
-              className="mt-4 flex h-12 items-center justify-center rounded-[10px] bg-accent text-[15px] font-semibold text-accent-fg"
-            >
-              Kirish
-            </Link>
-
-            <div className="mt-4 flex items-center justify-between rounded-xl border border-line px-4 py-2.5">
-              <span className="text-[14px] font-medium text-ink-2">Mavzu</span>
-              <ThemeToggle />
-            </div>
           </div>
         </div>
       ) : null}

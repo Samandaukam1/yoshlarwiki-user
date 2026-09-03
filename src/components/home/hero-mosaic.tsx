@@ -32,19 +32,6 @@ const DESKTOP_SLOTS: Slot[] = [
   { left: 85.9, width: 11.4, top: 54.3, ratio: 0.67 },
 ];
 
-/** Yuqoridagi bo'sh ("ghost") kartalar — dizaynda header ortida ko'rinadi. */
-const GHOST_SLOTS = [
-  { left: 3.2, width: 8.7 },
-  { left: 13.1, width: 9.1 },
-  { left: 25.5, width: 9.1 },
-  { left: 35.9, width: 10.4 },
-  { left: 47.1, width: 10.4 },
-  { left: 58.7, width: 10.4 },
-  { left: 70.3, width: 12.0 },
-  { left: 83.6, width: 10.0 },
-  { left: 94.4, width: 5.4 },
-];
-
 function Portrait({
   portrait,
   className = "",
@@ -88,20 +75,6 @@ export function HeroMosaicDesktop({
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
       <div className="yw-container relative h-full">
-        {GHOST_SLOTS.map((slot, index) => (
-          <div
-            key={`ghost-${index}`}
-            className="yw-enter-pop absolute rounded-[14px] bg-ghost-card"
-            style={{
-              left: `${slot.left}%`,
-              width: `${slot.width}%`,
-              top: "-2%",
-              height: "16%",
-              animationDelay: `${index * 40}ms`,
-            }}
-          />
-        ))}
-
         {DESKTOP_SLOTS.map((slot, index) => {
           const portrait = portraits[index % portraits.length];
           return (
