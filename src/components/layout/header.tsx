@@ -62,7 +62,7 @@ export function Header() {
         Asosiy kontentga oʻtish
       </a>
 
-      <header className="sticky top-0 z-50 bg-bg/85 backdrop-blur-md">
+      <header className="bg-bg">
         <div className="yw-container flex h-20 items-center gap-4">
           <Logo priority />
 
