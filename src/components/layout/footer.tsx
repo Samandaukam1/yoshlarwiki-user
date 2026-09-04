@@ -36,10 +36,10 @@ export function Footer() {
                 alt="Jaxongirman's IT TEAMS"
                 width={1080}
                 height={300}
-                className="h-5 w-auto"
+                className="h-10 w-auto"
               />
             </a>
-            tomonidan ishlab chiqilgan
+            Jaxongirman&apos;s IT teams tomonidan ishlab chiqilgan
           </p>
         </div>
 
