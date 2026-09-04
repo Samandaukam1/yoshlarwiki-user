@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Logo } from "./logo";
@@ -22,15 +23,22 @@ export function Footer() {
           <p className="mt-2 text-[12px] text-ink-3">
             © {year} {siteConfig.name}.uz — Barcha huquqlar himoyalangan.
           </p>
-          <p className="mt-1 text-[11px] text-ink-3">
+          <p className="mt-1.5 flex items-center gap-1.5 text-[11px] text-ink-3">
             <a
               href="https://t.me/jaxongirman"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium transition-colors hover:text-accent-text"
+              aria-label="Jaxongirman's IT TEAMS — Telegram"
+              className="inline-flex shrink-0 items-center transition-opacity hover:opacity-80"
             >
-              Jaxongirman&apos;s IT TEAMS
-            </a>{" "}
+              <Image
+                src="/assets/brand/png/credit-badge.png"
+                alt="Jaxongirman's IT TEAMS"
+                width={1080}
+                height={300}
+                className="h-5 w-auto"
+              />
+            </a>
             tomonidan ishlab chiqilgan
           </p>
         </div>
