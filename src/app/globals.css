@@ -152,6 +152,13 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
   -webkit-text-size-adjust: 100%;
+  /* Gorizontal scrollni shu yerda cheklaymiz, `body`da emas — aks holda
+     `overflow-x` yolg'iz qolgani uchun brauzer `overflow-y`ni ham
+     `auto`ga aylantiradi va `body` mustaqil scroll konteynerga aylanadi.
+     Bu esa sarlavhadagi `position: sticky`ni ayniqsa mobil Safari'da
+     buzadi — sarlavha tepada "yopishib" turmay, sahifa bilan scroll
+     bo'lib ketadi. */
+  overflow-x: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -174,7 +181,6 @@ body {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 ::selection {
