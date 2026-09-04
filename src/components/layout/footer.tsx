@@ -22,6 +22,17 @@ export function Footer() {
           <p className="mt-2 text-[12px] text-ink-3">
             © {year} {siteConfig.name}.uz — Barcha huquqlar himoyalangan.
           </p>
+          <p className="mt-1 text-[11px] text-ink-3">
+            <a
+              href="https://t.me/jaxongirman"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium transition-colors hover:text-accent-text"
+            >
+              Jaxongirman&apos;s IT TEAMS
+            </a>{" "}
+            tomonidan ishlab chiqilgan
+          </p>
         </div>
 
         <nav aria-label="Pastki menyu">
