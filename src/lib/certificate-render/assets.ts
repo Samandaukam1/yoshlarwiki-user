@@ -224,6 +224,9 @@ export function loadPortrait(url: string | null | undefined): Promise<string | n
     (image) =>
       image
         .resize({ width: 600, height: 760, fit: "cover", position: "top" })
+        // Portretlar ko'pincha shaffof PNG — JPEG'da shaffof joy qora bo'lib
+        // qolmasligi uchun oq fonga yotqiziladi.
+        .flatten({ background: "#ffffff" })
         .jpeg({ quality: 88 }),
     "image/jpeg",
   );

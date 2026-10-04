@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, FileText, Play } from "lucide-react";
 
 import { CandidateCard, CategoryCard, CategoryTile } from "@/components/cards";
+import { Ambient } from "@/components/ambient";
 import { HeroMarquee } from "@/components/home/hero-marquee";
 import { Reveal } from "@/components/reveal";
 import { StatsBar, StatsList } from "@/components/stats";
@@ -27,6 +28,8 @@ export default async function HomePage() {
 
   return (
     <>
+      <Ambient />
+
       {/* ============================ HERO ============================ */}
       <section className="relative">
         <div className="yw-hero-bg" aria-hidden />
@@ -108,7 +111,7 @@ export default async function HomePage() {
           <Reveal delay={tileCategories.length * 55}>
           <Link
             href="/ariza"
-            className="flex h-full flex-col items-center gap-2.5 rounded-card border border-line bg-surface px-2.5 py-4 text-center transition-colors hover:border-line-strong hover:bg-surface-hover"
+            className="yw-glass yw-glass-hover flex h-full flex-col items-center gap-2.5 rounded-[18px] px-2.5 py-4 text-center"
           >
             <span className="grid size-10 place-items-center rounded-xl bg-accent-soft text-accent-soft-fg">
               <FileText className="size-[19px]" strokeWidth={1.8} />
@@ -122,7 +125,7 @@ export default async function HomePage() {
 
         <Link
           href="/kategoriyalar"
-          className="yw-press mt-2.5 flex h-14 items-center justify-center gap-2 rounded-card border border-line bg-surface text-[14px] font-semibold text-accent-text transition-all hover:gap-3 hover:bg-surface-hover lg:hidden"
+          className="yw-glass yw-press mt-2.5 flex h-14 items-center justify-center gap-2 rounded-[18px] text-[14px] font-semibold text-accent-text hover:gap-3 lg:hidden"
         >
           Barcha kategoriyalar
           <ArrowRight className="size-4" />
@@ -170,7 +173,7 @@ export default async function HomePage() {
 
       {/* ====================== ARIZA CHAQIRIQ ======================== */}
       <section className="yw-container mt-14 lg:mt-24">
-        <Reveal className="relative overflow-hidden rounded-panel border border-line bg-surface px-6 py-10 text-center sm:px-10 lg:py-14">
+        <Reveal className="yw-glass relative overflow-hidden rounded-[28px] px-6 py-10 text-center sm:px-10 lg:py-14">
           <div className="yw-apply-bg" aria-hidden />
           <div className="relative mx-auto max-w-[560px]">
             <Eyebrow>Ariza topshirish</Eyebrow>

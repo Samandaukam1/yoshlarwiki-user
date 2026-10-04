@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { formatNumber } from "@/lib/format";
+
 /**
  * Blok ekranga kirganda yumshoq paydo bo'ladi.
  *
@@ -115,7 +117,7 @@ export function CountUp({
 
   return (
     <span ref={ref} className={className}>
-      {display}
+      {formatNumber(display)}
       {suffix}
     </span>
   );

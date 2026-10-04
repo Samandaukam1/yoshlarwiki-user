@@ -69,7 +69,7 @@ export function FilterBar({
     "h-11 w-full rounded-[10px] border border-line bg-surface px-3.5 text-[16px] text-ink outline-none transition-colors hover:border-line-strong sm:text-[14px] focus:border-accent-text";
 
   return (
-    <div className="rounded-card border border-line bg-surface p-3 sm:p-4">
+    <div className="yw-glass rounded-[20px] p-3 sm:p-4">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
         <div className="relative flex-1">
           <Search

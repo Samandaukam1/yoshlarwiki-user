@@ -226,19 +226,44 @@ export async function getPublicSetting<T = Record<string, unknown>>(
   return (data?.value as T) ?? null;
 }
 
-/** Bir nechta nomzodning kategoriyalar bo'yicha sonini qaytaradi. */
+/**
+ * Har bir kategoriyadagi nashr etilgan profillar soni.
+ * Qidiruv filtri bilan bir xil mantiq: nomzodning asosiy kategoriyasi
+ * VA qo'shimcha bog'langan kategoriyalari hisobga olinadi (bir nomzod bir
+ * kategoriyada bir marta sanaladi).
+ */
 export async function getCategoryCounts(): Promise<Record<string, number>> {
-  const { data } = await supabase
-    .from("candidate_categories")
-    .select("category_id, categories!inner(slug), candidates!inner(status)")
-    .eq("candidates.status", "published");
+  const [{ data: primary }, { data: linked }] = await Promise.all([
+    supabase
+      .from("candidates")
+      .select("id, primary_category:categories!candidates_primary_category_id_fkey(slug)")
+      .eq("status", "published"),
+    supabase
+      .from("candidate_categories")
+      .select("candidate_id, categories!inner(slug), candidates!inner(status)")
+      .eq("candidates.status", "published"),
+  ]);
 
-  const counts: Record<string, number> = {};
-  for (const row of (data ?? []) as unknown as {
-    categories: { slug: string };
+  const members = new Map<string, Set<string>>();
+  const add = (slug: string | undefined | null, candidateId: string) => {
+    if (!slug) return;
+    let set = members.get(slug);
+    if (!set) members.set(slug, (set = new Set()));
+    set.add(candidateId);
+  };
+
+  for (const row of (primary ?? []) as unknown as {
+    id: string;
+    primary_category: { slug: string } | null;
   }[]) {
-    const slug = row.categories?.slug;
-    if (slug) counts[slug] = (counts[slug] ?? 0) + 1;
+    add(row.primary_category?.slug, row.id);
   }
-  return counts;
+  for (const row of (linked ?? []) as unknown as {
+    candidate_id: string;
+    categories: { slug: string } | null;
+  }[]) {
+    add(row.categories?.slug, row.candidate_id);
+  }
+
+  return Object.fromEntries([...members].map(([slug, set]) => [slug, set.size]));
 }

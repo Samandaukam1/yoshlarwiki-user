@@ -8,6 +8,7 @@ import { Reveal } from "@/components/reveal";
 import { categoryIcon, EmptyState, Eyebrow, IconChip } from "@/components/ui";
 import { getCategories, getCategoryBySlug, searchCandidates } from "@/lib/queries";
 import { siteConfig } from "@/lib/site";
+import { Ambient } from "@/components/ambient";
 
 export const revalidate = 300;
 
@@ -53,6 +54,7 @@ export default async function CategoryPage(
 
   return (
     <div className="yw-container py-10 lg:py-14">
+      <Ambient />
       <nav aria-label="Yoʻnalish" className="flex items-center gap-1.5 text-[13px] text-ink-3">
         <Link href="/kategoriyalar" className="hover:text-accent-text">
           Kategoriyalar

@@ -48,6 +48,7 @@ export async function GET(request: Request) {
     ? `data:image/jpeg;base64,${(
         await sharp(await readFile(join(process.cwd(), local)))
           .resize({ width: 600, height: 760, fit: "cover", position: "top" })
+          .flatten({ background: "#ffffff" })
           .jpeg()
           .toBuffer()
       ).toString("base64")}`

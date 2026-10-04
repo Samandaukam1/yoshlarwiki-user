@@ -96,7 +96,7 @@ export function StatsBar({
 /** Mobil bosh sahifa uchun: "Biz haqimizda" ro'yxati. */
 export function StatsList({ stats }: { stats: PublicStats }) {
   return (
-    <div className="overflow-hidden rounded-card border border-line bg-surface">
+    <div className="yw-glass overflow-hidden rounded-[20px]">
       <ul>
         {STAT_ITEMS.map((item, index) => {
           const stat = formatStat(stats[item.key]);
@@ -104,8 +104,8 @@ export function StatsList({ stats }: { stats: PublicStats }) {
           <li key={item.key}>
             <Link
               href={item.href}
-              className={`flex items-center gap-3.5 px-4 py-3.5 transition-colors hover:bg-surface-hover ${
-                index > 0 ? "border-t border-line" : ""
+              className={`flex items-center gap-3.5 px-4 py-3.5 transition-colors hover:bg-white/30 dark:hover:bg-white/5 ${
+                index > 0 ? "border-t border-white/50 dark:border-white/10" : ""
               }`}
             >
               <IconChip icon={item.icon} />

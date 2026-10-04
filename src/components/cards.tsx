@@ -14,7 +14,7 @@ export function CategoryTile({ category }: { category: Category }) {
   return (
     <Link
       href={`/kategoriyalar/${category.slug}`}
-      className="group flex h-full flex-col items-center gap-2.5 rounded-card border border-line bg-surface px-2.5 py-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:bg-surface-hover hover:shadow-yw"
+      className="yw-glass yw-glass-hover group flex h-full flex-col items-center gap-2.5 rounded-[18px] px-2.5 py-4 text-center"
     >
       <span className="grid size-10 place-items-center rounded-xl bg-accent-soft text-accent-soft-fg transition-transform duration-300 group-hover:scale-110">
         <CategoryIcon name={category.icon} className="size-[19px]" />
@@ -37,7 +37,7 @@ export function CategoryCard({
   return (
     <Link
       href={`/kategoriyalar/${category.slug}`}
-      className="group flex h-full flex-col rounded-card border border-line bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-yw"
+      className="yw-glass yw-glass-hover group flex h-full flex-col rounded-[20px] p-5"
     >
       <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent-soft-fg transition-transform duration-300 group-hover:scale-110">
         <CategoryIcon name={category.icon} className="size-[21px]" />
@@ -76,17 +76,17 @@ export function CandidateCard({
   return (
     <Link
       href={`/yoshlar/${candidate.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-yw-lg"
+      className="yw-glass yw-glass-hover group flex h-full flex-col overflow-hidden rounded-[22px]"
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-surface-2">
+      <div className="relative aspect-[4/5] overflow-hidden">
         {candidate.portrait_url ? (
           <Image
             src={candidate.portrait_url}
             alt={candidate.portrait_alt ?? candidate.full_name}
             fill
             sizes="(min-width: 1280px) 300px, (min-width: 768px) 33vw, 50vw"
-            priority={priority}
-            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+            preload={priority}
+            className="yw-glass-photo object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
         ) : (
           <span className="grid size-full place-items-center text-ink-3">
@@ -95,8 +95,8 @@ export function CandidateCard({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-[15px] font-bold leading-snug text-ink">
+      <div className="relative flex flex-1 flex-col px-4 pb-4 pt-1">
+        <h3 className="text-[15px] font-bold leading-snug tracking-[-0.01em] text-ink">
           {candidate.full_name}
         </h3>
         {candidate.title ? (
@@ -105,12 +105,12 @@ export function CandidateCard({
           </p>
         ) : null}
 
-        <div className="mt-auto flex flex-col gap-1.5 pt-3.5 text-[12px] text-ink-3">
+        <div className="mt-auto flex flex-col gap-1.5 pt-3.5 text-[12px] text-ink-2">
           {candidate.category ? (
             <span className="flex min-w-0 items-center gap-1.5">
               <CategoryIcon
                 name={candidate.category.icon}
-                className="size-[14px] shrink-0"
+                className="size-[14px] shrink-0 text-ink-3"
                 strokeWidth={1.9}
               />
               <span className="truncate">{candidate.category.name}</span>
@@ -118,7 +118,7 @@ export function CandidateCard({
           ) : null}
           {candidate.region ? (
             <span className="flex min-w-0 items-center gap-1.5">
-              <MapPin className="size-[14px] shrink-0" strokeWidth={1.9} />
+              <MapPin className="size-[14px] shrink-0 text-ink-3" strokeWidth={1.9} />
               <span className="truncate">{candidate.region.name}</span>
             </span>
           ) : null}
@@ -130,8 +130,8 @@ export function CandidateCard({
 
 export function CandidateCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-card border border-line bg-surface">
-      <div className="yw-skeleton aspect-[4/5]" />
+    <div className="yw-glass overflow-hidden rounded-[22px]">
+      <div className="yw-skeleton aspect-[4/5] bg-transparent" />
       <div className="space-y-2 p-4">
         <div className="yw-skeleton h-4 w-3/4 rounded" />
         <div className="yw-skeleton h-3 w-1/2 rounded" />

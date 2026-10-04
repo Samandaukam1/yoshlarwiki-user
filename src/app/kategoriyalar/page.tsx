@@ -4,6 +4,7 @@ import { CategoryCard } from "@/components/cards";
 import { Reveal } from "@/components/reveal";
 import { EmptyState, Eyebrow } from "@/components/ui";
 import { getCategories, getCategoryCounts } from "@/lib/queries";
+import { Ambient } from "@/components/ambient";
 
 export const revalidate = 600;
 
@@ -22,6 +23,7 @@ export default async function CategoriesPage() {
 
   return (
     <div className="yw-container py-10 lg:py-16">
+      <Ambient />
       <header className="yw-enter max-w-[640px]">
         <Eyebrow>Kategoriyalar</Eyebrow>
         <h1 className="mt-4 text-[32px] font-extrabold leading-[1.1] tracking-[-0.03em] text-ink lg:text-[44px]">

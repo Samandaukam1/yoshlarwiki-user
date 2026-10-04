@@ -527,6 +527,9 @@ body {
 .yw-reveal[data-visible="true"] {
   opacity: 1;
   transform: none;
+  /* will-change: opacity elementni "backdrop root"ga aylantiradi — ichidagi
+     liquid glass kartalar orqa fonni xiralashtira olmay qoladi. */
+  will-change: auto;
 }
 
 /* Sarlavha ostidagi ko'k chiziq chizilishi. */
@@ -603,5 +606,384 @@ body {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* ==========================================================================
+   Suzuvchi "Ariza topshirish" tugmasi (mobil)
+   ========================================================================== */
+
+.yw-fab {
+  -webkit-tap-highlight-color: transparent;
+  box-shadow:
+    0 10px 24px -6px rgb(0 80 250 / 0.55),
+    0 2px 6px rgb(0 40 140 / 0.25),
+    inset 0 1px 0 rgb(255 255 255 / 0.25);
+  animation: yw-fab-float 4.5s ease-in-out infinite;
+}
+
+.yw-fab:active {
+  transform: scale(0.94);
+}
+
+/* Ohista tebranish — tugma "tirik" ko'rinsin. */
+@keyframes yw-fab-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -4px;
+  }
+}
+
+/* Vaqti-vaqti bilan tarqaluvchi halqa — e'tiborni tortadi, lekin bezovta qilmaydi. */
+.yw-fab-ring {
+  box-shadow: 0 0 0 0 rgb(0 80 250 / 0.45);
+  animation: yw-fab-pulse 3.2s cubic-bezier(0.22, 1, 0.36, 1) infinite 1.2s;
+}
+
+@keyframes yw-fab-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(0 80 250 / 0.45);
+  }
+  60%,
+  100% {
+    box-shadow: 0 0 0 16px rgb(0 80 250 / 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yw-fab,
+  .yw-fab-ring {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Liquid glass
+   Shisha faqat ortida rang bo'lsa "tiriladi" — shuning uchun glass
+   kartalar turgan sahifalarda orqa fonda sekin suzuvchi rangli nur
+   dog'lari (.yw-ambient) bo'ladi.
+   ========================================================================== */
+
+.yw-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.yw-ambient span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: var(--yw-ambient-opacity, 0.55);
+  will-change: transform;
+  animation: yw-ambient-drift 26s ease-in-out infinite alternate;
+}
+
+.yw-ambient span:nth-child(1) {
+  width: 46vmax;
+  height: 46vmax;
+  left: -12vmax;
+  top: -8vmax;
+  background: var(--yw-ambient-1);
+}
+
+.yw-ambient span:nth-child(2) {
+  width: 40vmax;
+  height: 40vmax;
+  right: -14vmax;
+  top: 18vh;
+  background: var(--yw-ambient-2);
+  animation-duration: 32s;
+  animation-delay: -8s;
+}
+
+.yw-ambient span:nth-child(3) {
+  width: 38vmax;
+  height: 38vmax;
+  left: 18vw;
+  bottom: -16vmax;
+  background: var(--yw-ambient-3);
+  animation-duration: 38s;
+  animation-delay: -16s;
+}
+
+@keyframes yw-ambient-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4vw, 3vh, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-3vw, -2vh, 0) scale(0.96);
+  }
+}
+
+:root {
+  --yw-ambient-1: rgb(64 132 255 / 0.55);
+  --yw-ambient-2: rgb(150 120 255 / 0.4);
+  --yw-ambient-3: rgb(255 176 120 / 0.45);
+  --yw-ambient-opacity: 0.5;
+
+  --yw-glass-bg: linear-gradient(
+    155deg,
+    rgb(255 255 255 / 0.78) 0%,
+    rgb(255 255 255 / 0.5) 45%,
+    rgb(255 255 255 / 0.36) 100%
+  );
+  --yw-glass-edge: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.95),
+    rgb(255 255 255 / 0.15) 38%,
+    rgb(255 255 255 / 0.05) 62%,
+    rgb(255 255 255 / 0.6)
+  );
+  --yw-glass-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    inset 0 -1px 0 rgb(255 255 255 / 0.3),
+    0 1px 2px rgb(40 30 20 / 0.05),
+    0 14px 34px -12px rgb(30 45 100 / 0.22);
+  --yw-glass-shadow-hover:
+    inset 0 1px 0 rgb(255 255 255 / 0.95),
+    inset 0 -1px 0 rgb(255 255 255 / 0.35),
+    0 2px 4px rgb(40 30 20 / 0.06),
+    0 26px 50px -16px rgb(30 45 120 / 0.32);
+  --yw-glass-sheen: radial-gradient(
+    120% 60% at 15% 0%,
+    rgb(255 255 255 / 0.65),
+    rgb(255 255 255 / 0) 55%
+  );
+}
+
+[data-theme="dark"] {
+  --yw-ambient-1: rgb(0 92 255 / 0.55);
+  --yw-ambient-2: rgb(120 70 255 / 0.4);
+  --yw-ambient-3: rgb(0 170 220 / 0.32);
+  --yw-ambient-opacity: 0.55;
+
+  --yw-glass-bg: linear-gradient(
+    155deg,
+    rgb(255 255 255 / 0.12) 0%,
+    rgb(255 255 255 / 0.05) 50%,
+    rgb(255 255 255 / 0.03) 100%
+  );
+  --yw-glass-edge: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.4),
+    rgb(255 255 255 / 0.04) 40%,
+    rgb(255 255 255 / 0.02) 60%,
+    rgb(140 180 255 / 0.3)
+  );
+  --yw-glass-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.16),
+    inset 0 -1px 0 rgb(255 255 255 / 0.04),
+    0 18px 40px -14px rgb(0 0 0 / 0.65);
+  --yw-glass-shadow-hover:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -1px 0 rgb(255 255 255 / 0.06),
+    0 28px 56px -18px rgb(0 10 40 / 0.85);
+  --yw-glass-sheen: radial-gradient(
+    120% 60% at 15% 0%,
+    rgb(255 255 255 / 0.14),
+    rgb(255 255 255 / 0) 55%
+  );
+}
+
+.yw-glass {
+  position: relative;
+  isolation: isolate;
+  background: var(--yw-glass-bg);
+  box-shadow: var(--yw-glass-shadow);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  backdrop-filter: blur(20px) saturate(170%);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease;
+}
+
+/* Yuqori chap burchakdagi yorug'lik aksi. */
+.yw-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--yw-glass-sheen);
+  pointer-events: none;
+}
+
+/* Chetlardagi nur sinishi — gradientli ingichka hoshiya (border o'rnida:
+   overflow: hidden bo'lgan kartalarda ham kesilmaydi). */
+.yw-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--yw-glass-edge);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .yw-glass-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--yw-glass-shadow-hover);
+  }
+}
+
+/* Shaffoflikni kamaytirish so'ralgan bo'lsa — oddiy to'q karta. */
+@media (prefers-reduced-transparency: reduce) {
+  .yw-glass {
+    background: var(--yw-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .yw-ambient {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yw-ambient span {
+    animation: none;
+  }
+}
+
+/* Glass kartadagi portret: kunduzi oq fonli suratlar ham shishaga
+   "singib" ketadi (multiply), pastki qismi shishaga silliq o'tadi. */
+.yw-glass-photo {
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+
+[data-theme="dark"] .yw-glass-photo {
+  mix-blend-mode: normal;
+  filter: brightness(0.93) saturate(1.04);
+}
+
+/* ==========================================================================
+   Reyting "arenasi" — har ikki mavzuda ham to'q sahna
+   ========================================================================== */
+
+.yw-arena {
+  isolation: isolate;
+  background:
+    radial-gradient(70% 55% at 50% 0%, rgb(0 92 255 / 0.55), transparent 72%),
+    radial-gradient(55% 45% at 0% 100%, rgb(124 92 255 / 0.32), transparent 70%),
+    radial-gradient(50% 45% at 100% 90%, rgb(0 180 230 / 0.22), transparent 70%),
+    linear-gradient(180deg, #071733 0%, #030c1f 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 30px 60px -30px rgb(0 20 70 / 0.6);
+}
+
+/* Nozik to'r chiziqlari */
+.yw-arena::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    repeating-linear-gradient(to right, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 72px),
+    repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.035) 0 1px, transparent 1px 72px);
+  -webkit-mask-image: radial-gradient(75% 70% at 50% 35%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(75% 70% at 50% 35%, #000 30%, transparent 75%);
+}
+
+/* Tepadan tushayotgan projektor nuri */
+.yw-arena-beam {
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  z-index: -1;
+  width: 70%;
+  height: 90%;
+  translate: -50% 0;
+  background: conic-gradient(
+    from 180deg at 50% 0%,
+    transparent 155deg,
+    rgb(160 200 255 / 0.16) 172deg,
+    rgb(200 225 255 / 0.22) 180deg,
+    rgb(160 200 255 / 0.16) 188deg,
+    transparent 205deg
+  );
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* Mayda uchqunlar */
+.yw-arena-sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 22%, rgb(255 255 255 / 0.8), transparent),
+    radial-gradient(1px 1px at 24% 64%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 38% 14%, rgb(255 230 160 / 0.8), transparent),
+    radial-gradient(1px 1px at 61% 30%, rgb(255 255 255 / 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 78% 18%, rgb(255 255 255 / 0.75), transparent),
+    radial-gradient(1px 1px at 88% 56%, rgb(255 230 160 / 0.7), transparent),
+    radial-gradient(1.2px 1.2px at 6% 78%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(1.2px 1.2px at 93% 82%, rgb(255 255 255 / 0.5), transparent);
+  animation: yw-twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes yw-twinkle {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Shohsupa poydevori — to'q shisha */
+.yw-podium-block {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.16) 0%, rgb(255 255 255 / 0.05) 55%, rgb(255 255 255 / 0.02) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.28),
+    inset 1px 0 0 rgb(255 255 255 / 0.06),
+    inset -1px 0 0 rgb(255 255 255 / 0.06);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Toj — ohista tebranadi */
+.yw-crown {
+  animation: yw-crown-bob 3s ease-in-out infinite;
+}
+
+@keyframes yw-crown-bob {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: -6deg;
+  }
+  50% {
+    translate: 0 -3px;
+    rotate: 6deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yw-arena-sparkles,
+  .yw-crown {
+    animation: none;
   }
 }
