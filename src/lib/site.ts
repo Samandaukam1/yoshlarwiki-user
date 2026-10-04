@@ -13,6 +13,7 @@ export const navigation = [
   { label: "Bosh sahifa", href: "/" },
   { label: "Kategoriyalar", href: "/kategoriyalar" },
   { label: "Yoshlar", href: "/yoshlar" },
+  { label: "Reyting", href: "/reyting" },
   { label: "Ariza topshirish", href: "/ariza" },
   { label: "Biz haqimizda", href: "/biz-haqimizda" },
 ] as const;
@@ -20,6 +21,8 @@ export const navigation = [
 export const footerLinks = [
   { label: "Kategoriyalar", href: "/kategoriyalar" },
   { label: "Yoshlar", href: "/yoshlar" },
+  { label: "Reyting", href: "/reyting" },
+  { label: "Sertifikatni tekshirish", href: "/sertifikat" },
   { label: "Ariza topshirish", href: "/ariza" },
   { label: "Biz haqimizda", href: "/biz-haqimizda" },
   { label: "Aloqa", href: "/biz-haqimizda#aloqa" },

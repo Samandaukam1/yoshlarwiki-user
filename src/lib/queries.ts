@@ -129,6 +129,21 @@ export async function getMarqueeCandidates(): Promise<CandidateCard[]> {
   return result.items.filter((item) => Boolean(item.portrait_url));
 }
 
+/**
+ * Profilning ko'rishlar bo'yicha o'rni (1 — eng ko'p ko'rilgan).
+ * Teng ko'rishlar bir xil o'rinni egallaydi (1, 2, 2, 4 …) — reyting
+ * sahifasidagi raqamlash bilan bir xil.
+ */
+export async function getCandidateRank(viewCount: number): Promise<number | null> {
+  const { count, error } = await supabase
+    .from("candidates")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "published")
+    .gt("view_count", viewCount);
+  if (error || count === null) return null;
+  return count + 1;
+}
+
 export async function quickSearch(query: string) {
   const { data, error } = await supabase.rpc("quick_search", {
     p_query: query,

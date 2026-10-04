@@ -18,6 +18,15 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   poweredByHeader: false,
+  // Sertifikat rasmi/PDF'i serverda chiziladi — shriftlar va logotip diskdan
+  // o'qiladi. Ular serverless funksiyaga albatta qo'shilishi uchun.
+  outputFileTracingIncludes: {
+    "/sertifikat/**": [
+      "./assets/fonts/**/*",
+      "./public/assets/brand/png/certificate-logo.png",
+      "./public/assets/brand/signature/**/*",
+    ],
+  },
   async headers() {
     return [
       {

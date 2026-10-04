@@ -55,7 +55,7 @@ export function Header() {
 
           <nav
             aria-label="Asosiy menyu"
-            className="ml-auto hidden lg:flex lg:items-center lg:gap-8"
+            className="ml-auto hidden lg:flex lg:items-center lg:gap-5 xl:gap-8"
           >
             {navigation.map((item) => {
               const active = isActive(pathname, item.href);
@@ -82,7 +82,7 @@ export function Header() {
             })}
           </nav>
 
-          <div className="ml-auto flex items-center gap-0.5 sm:gap-1.5 lg:ml-8 lg:gap-2">
+          <div className="ml-auto flex items-center gap-0.5 sm:gap-1.5 lg:ml-6 lg:gap-2 xl:ml-8">
             {/* Kecha/kunduz rejimi qidiruv yonida — barcha ekran o'lchamlarida. */}
             <ThemeToggle className="shrink-0" />
 

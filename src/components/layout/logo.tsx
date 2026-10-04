@@ -21,7 +21,7 @@ export function Logo({
 }) {
   const md = size === "md";
   const shortHeight = md ? "h-12" : "h-9";
-  const horizontalHeight = md ? "h-[72px]" : "h-8";
+  const horizontalHeight = md ? "h-[60px] xl:h-[72px]" : "h-8";
 
   return (
     <Link

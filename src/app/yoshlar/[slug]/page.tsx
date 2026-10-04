@@ -8,6 +8,7 @@ import {
   Briefcase,
   Calendar,
   ChevronRight,
+  Eye,
   FolderKanban,
   GraduationCap,
   MapPin,
@@ -21,7 +22,8 @@ import { ViewTracker } from "@/components/candidate/view-tracker";
 import { Reveal } from "@/components/reveal";
 import { SOCIAL_LABELS, socialIcon } from "@/components/social-icons";
 import { Eyebrow, SectionHeading } from "@/components/ui";
-import { getCandidateBySlug, getPublishedSlugs } from "@/lib/queries";
+import { formatNumber } from "@/lib/format";
+import { getCandidateBySlug, getCandidateRank, getPublishedSlugs } from "@/lib/queries";
 import { siteConfig } from "@/lib/site";
 
 export const revalidate = 300;
@@ -99,6 +101,8 @@ export default async function CandidatePage(
 
   if (!candidate) notFound();
 
+  const rank = await getCandidateRank(candidate.view_count);
+
   const facts = [
     { icon: Calendar, label: "Tugʻilgan sana", value: formatDate(candidate.birth_date) },
     { icon: MapPin, label: "Tugʻilgan joy", value: candidate.birth_place },
@@ -155,8 +159,31 @@ export default async function CandidatePage(
           <div className="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)_186px] lg:gap-10">
             {/* Matn ustuni */}
             <div className="relative z-10 pb-8 pt-10 lg:pb-16 lg:pt-16">
-              <div className="yw-enter" style={{ animationDelay: "60ms" }}>
+              <div
+                className="yw-enter flex flex-wrap items-center gap-x-3 gap-y-2"
+                style={{ animationDelay: "60ms" }}
+              >
                 <Eyebrow variant="plain">Yoshlar ensiklopediyasi</Eyebrow>
+                {/* Ko'rishlar soni va reytingdagi o'rni */}
+                <Link
+                  href="/reyting"
+                  className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-2.5 py-1 text-[11.5px] font-semibold text-ink-2 backdrop-blur transition-colors hover:border-accent hover:text-accent-text"
+                >
+                  <span className="inline-flex items-center gap-1 tabular-nums">
+                    <Eye className="size-3.5" strokeWidth={2} aria-hidden />
+                    {formatNumber(candidate.view_count)}
+                    <span className="sr-only"> marta koʻrilgan</span>
+                  </span>
+                  {rank ? (
+                    <>
+                      <span aria-hidden className="h-3 w-px bg-line-strong" />
+                      <span className="inline-flex items-center gap-1">
+                        <Trophy className="size-3.5 text-accent-text" strokeWidth={2} aria-hidden />
+                        Reytingda {rank}-oʻrin
+                      </span>
+                    </>
+                  ) : null}
+                </Link>
               </div>
 
               <h1

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { House, Info, LayoutGrid, Plus, Users, type LucideIcon } from "lucide-react";
+import { House, Info, LayoutGrid, Plus, Trophy, type LucideIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type DockItem = {
@@ -18,8 +18,8 @@ const ITEMS: DockItem[] = [
   { href: "/", label: "Asosiy", icon: House },
   { href: "/kategoriyalar", label: "Kategoriya", icon: LayoutGrid },
   { href: "/ariza", label: "Ariza", icon: Plus, primary: true },
-  { href: "/yoshlar", label: "Yoshlar", icon: Users },
-  { href: "/biz-haqimizda", label: "Haqimizda", icon: Info },
+  { href: "/reyting", label: "Reyting", icon: Trophy },
+  { href: "/biz-haqimizda", label: "InfoWiki", icon: Info },
 ];
 
 function isActive(pathname: string, href: string) {
