@@ -33,8 +33,10 @@ const AGE_RANGES = [
 const FIELD_LABEL =
   "block text-[13px] font-semibold text-ink";
 const FIELD_HELP = "mt-1 text-[12px] leading-snug text-ink-3";
+// Mobilda 16px — iOS Safari 16px dan kichik maydonga fokus berilganda
+// sahifani avtomatik kattalashtiradi (zoom) va tartib "siljib" ketadi.
 const INPUT =
-  "h-12 w-full rounded-[10px] border border-line bg-surface text-[14px] text-ink outline-none transition-colors focus:border-accent-text placeholder:text-ink-3";
+  "h-12 w-full rounded-[10px] border border-line bg-surface text-[16px] sm:text-[14px] text-ink outline-none transition-colors focus:border-accent-text placeholder:text-ink-3";
 
 /** Telefon raqamni "90 123 45 67" ko'rinishida ko'rsatadi. */
 function formatPhone(raw: string) {
@@ -176,7 +178,7 @@ export function ApplicationForm() {
               className="pointer-events-none absolute left-4 top-1/2 size-[18px] -translate-y-1/2 text-ink-3"
               strokeWidth={1.8}
             />
-            <span className="pointer-events-none absolute left-11 top-1/2 -translate-y-1/2 text-[14px] font-medium text-ink-2">
+            <span className="pointer-events-none absolute left-11 top-1/2 -translate-y-1/2 text-[16px] font-medium text-ink-2 sm:text-[14px]">
               +998
             </span>
             <input
@@ -191,7 +193,7 @@ export function ApplicationForm() {
               aria-invalid={Boolean(errorFor("phone"))}
               aria-describedby={`${ids.phone}-help`}
               placeholder="90 123 45 67"
-              className={`${INPUT} pl-[86px] pr-4`}
+              className={`${INPUT} pl-[92px] pr-4 sm:pl-[86px]`}
             />
           </div>
           <span id={`${ids.phone}-help`} className="sr-only">

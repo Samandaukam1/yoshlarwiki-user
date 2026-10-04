@@ -39,7 +39,22 @@ const STAT_ITEMS: StatItem[] = [
   { key: "approved_applications", label: "Tasdiqlangan arizalar", icon: FileText, href: "/ariza" },
 ];
 
-/** Desktop uchun: bitta karta ichida 5 ta ustun, orasida ingichka ajratgich. */
+/**
+ * Kartalar orasidagi ajratgichlar — `gap-px` + chegara rangidagi fon.
+ * Shu usulda chiziqlar har qanday ustunlar sonida aniq 1px bo'ladi va
+ * yumaloq burchakdan tashqariga chiqib qolmaydi (`overflow-hidden`).
+ *
+ * Joylashuv: mobil — 2 ustun (oxirgisi to'liq kenglikda), planshet —
+ * 6 qismli to'r (3 + 2 karta), desktop — bitta qatorda 5 ta ustun.
+ */
+const STAT_SPANS = [
+  "sm:col-span-2",
+  "sm:col-span-2",
+  "sm:col-span-2",
+  "sm:col-span-3",
+  "col-span-2 sm:col-span-3",
+];
+
 export function StatsBar({
   stats,
   className = "",
@@ -49,30 +64,28 @@ export function StatsBar({
 }) {
   return (
     <Reveal
-      className={`rounded-panel border border-line bg-surface shadow-yw ${className}`}
+      className={`overflow-hidden rounded-panel border border-line bg-line shadow-yw ${className}`}
     >
-      <dl className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+      <dl className="grid grid-cols-2 gap-px sm:grid-cols-6 lg:grid-cols-5">
         {STAT_ITEMS.map((item, index) => {
           const stat = formatStat(stats[item.key]);
           return (
-          <div
-            key={item.key}
-            className={`flex items-center gap-3.5 px-5 py-5 lg:px-6 ${
-              index > 0
-                ? "border-t border-line sm:border-t-0 lg:border-l"
-                : ""
-            } ${index >= 2 ? "sm:border-t sm:first-of-type:border-t-0 lg:border-t-0" : ""} ${
-              index % 2 === 1 ? "border-l sm:border-l" : ""
-            }`}
-          >
-            <IconChip icon={item.icon} />
-            <div className="min-w-0">
-              <dd className="text-[21px] font-bold leading-tight tracking-[-0.01em] text-ink tabular-nums">
-                <CountUp value={stat.value} suffix={stat.suffix} />
-              </dd>
-              <dt className="truncate text-[12.5px] text-ink-2">{item.label}</dt>
+            <div
+              key={item.key}
+              className={`flex min-w-0 flex-col gap-3 bg-surface p-4 sm:flex-row sm:items-center sm:gap-3.5 sm:px-5 sm:py-5 lg:col-span-1 lg:px-6 ${
+                STAT_SPANS[index] ?? ""
+              } ${index === STAT_ITEMS.length - 1 ? "max-sm:flex-row max-sm:items-center" : ""}`}
+            >
+              <IconChip icon={item.icon} size="sm" className="sm:size-11" />
+              <div className="min-w-0">
+                <dd className="text-[21px] font-bold leading-tight tracking-[-0.01em] text-ink tabular-nums">
+                  <CountUp value={stat.value} suffix={stat.suffix} />
+                </dd>
+                <dt className="mt-0.5 text-[12.5px] leading-snug text-ink-2">
+                  {item.label}
+                </dt>
+              </div>
             </div>
-          </div>
           );
         })}
       </dl>

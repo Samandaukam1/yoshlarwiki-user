@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, X } from "lucide-react";
+import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { BottomNav } from "./bottom-nav";
 import { Logo } from "./logo";
 import { SearchDialog } from "./search-dialog";
 import { ThemeToggle } from "@/components/theme";
@@ -17,23 +18,7 @@ function isActive(pathname: string, href: string) {
 
 export function Header() {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [lastPathname, setLastPathname] = useState(pathname);
-
-  // Sahifa almashganda menyu yopiladi. Effekt emas, render paytida
-  // holatni moslash — React tavsiya qiladigan naqsh.
-  if (pathname !== lastPathname) {
-    setLastPathname(pathname);
-    setMenuOpen(false);
-  }
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
 
   // "/" tugmasi bilan qidiruvni ochish.
   useEffect(() => {
@@ -62,7 +47,9 @@ export function Header() {
         Asosiy kontentga oʻtish
       </a>
 
-      <header className="bg-bg">
+      {/* viewport-fit=cover bilan sahifa status-bar ostiga ham yoyiladi —
+          sarlavha xavfsiz hududdan pastda boshlanadi. */}
+      <header className="bg-bg pt-[env(safe-area-inset-top)]">
         <div className="yw-container flex h-20 items-center gap-4">
           <Logo priority />
 
@@ -107,69 +94,12 @@ export function Header() {
             >
               <Search className="size-[19px]" strokeWidth={1.9} />
             </button>
-
-            <button
-              type="button"
-              onClick={() => setMenuOpen(true)}
-              aria-label="Menyuni ochish"
-              aria-expanded={menuOpen}
-              className="grid size-9 shrink-0 place-items-center rounded-full text-ink hover:bg-surface-hover lg:hidden"
-            >
-              <Menu className="size-[22px]" strokeWidth={1.9} />
-            </button>
           </div>
         </div>
       </header>
 
-      {/* Mobil menyu */}
-      {menuOpen ? (
-        <div className="fixed inset-0 z-[110] lg:hidden">
-          <button
-            type="button"
-            aria-label="Menyuni yopish"
-            onClick={() => setMenuOpen(false)}
-            className="absolute inset-0 cursor-default bg-ink/30"
-          />
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-label="Menyu"
-            className="absolute inset-x-0 top-0 rounded-b-panel border-b border-line bg-surface p-5 shadow-yw-lg"
-          >
-            <div className="flex items-center justify-between">
-              <Logo />
-              <button
-                type="button"
-                onClick={() => setMenuOpen(false)}
-                aria-label="Yopish"
-                className="grid size-9 place-items-center rounded-full text-ink hover:bg-surface-hover"
-              >
-                <X className="size-5" />
-              </button>
-            </div>
-
-            <nav aria-label="Mobil menyu" className="mt-5 flex flex-col">
-              {navigation.map((item) => {
-                const active = isActive(pathname, item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={`rounded-xl px-3 py-3 text-[15px] ${
-                      active
-                        ? "bg-accent-soft font-semibold text-accent-soft-fg"
-                        : "font-medium text-ink hover:bg-surface-hover"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-        </div>
-      ) : null}
+      {/* Mobil navigatsiya — burger menyu o'rniga ekran pastidagi panel. */}
+      <BottomNav />
 
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>

@@ -3,7 +3,6 @@ import type { Database } from "./supabase/database.types";
 
 export type Category = Database["public"]["Tables"]["categories"]["Row"];
 export type Region = Database["public"]["Tables"]["regions"]["Row"];
-export type HeroPortrait = Database["public"]["Tables"]["hero_portraits"]["Row"];
 
 export type PublicStats = {
   candidates: number;
@@ -91,15 +90,6 @@ export async function getRegions(): Promise<Region[]> {
   return data ?? [];
 }
 
-export async function getHeroPortraits(): Promise<HeroPortrait[]> {
-  const { data } = await supabase
-    .from("hero_portraits")
-    .select("*")
-    .eq("is_active", true)
-    .order("sort_order");
-  return data ?? [];
-}
-
 export type SearchParams = {
   query?: string | null;
   category?: string | null;
@@ -128,6 +118,15 @@ export async function searchCandidates(
     return { total: 0, limit, offset, items: [] };
   }
   return data as unknown as SearchResult;
+}
+
+/**
+ * Bosh sahifa karuseli uchun: portreti bor, e'lon qilingan haqiqiy yoshlar.
+ * (Ilgari bu yerda `hero_portraits` jadvalidagi sun'iy rasmlar ishlatilardi.)
+ */
+export async function getMarqueeCandidates(): Promise<CandidateCard[]> {
+  const result = await searchCandidates({ limit: 48, sort: "recent" });
+  return result.items.filter((item) => Boolean(item.portrait_url));
 }
 
 export async function quickSearch(query: string) {

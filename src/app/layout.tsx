@@ -66,11 +66,14 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbfbfc" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f2ea" },
     { media: "(prefers-color-scheme: dark)", color: "#000c1a" },
   ],
   width: "device-width",
   initialScale: 1,
+  // Pastki navigatsiya paneli iPhone'ning "home indicator" hududini
+  // hisobga olishi uchun (env(safe-area-inset-*) qiymatlari shundan keladi).
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -86,6 +89,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </div>
         <Footer />
+        {/* Mobil pastki panel kontentning oxirini to'sib qo'ymasligi uchun joy. */}
+        <div
+          aria-hidden
+          className="h-[calc(env(safe-area-inset-bottom)+88px)] shrink-0 lg:hidden"
+        />
       </body>
     </html>
   );

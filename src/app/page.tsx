@@ -2,13 +2,13 @@ import Link from "next/link";
 import { ArrowRight, FileText, Play } from "lucide-react";
 
 import { CandidateCard, CategoryCard, CategoryTile } from "@/components/cards";
-import { HeroMosaicDesktop, HeroMosaicMobile } from "@/components/home/hero-mosaic";
+import { HeroMarquee } from "@/components/home/hero-marquee";
 import { Reveal } from "@/components/reveal";
 import { StatsBar, StatsList } from "@/components/stats";
 import { ButtonLink, Eyebrow, SectionHeading } from "@/components/ui";
 import {
   getCategories,
-  getHeroPortraits,
+  getMarqueeCandidates,
   getStats,
   searchCandidates,
 } from "@/lib/queries";
@@ -16,8 +16,8 @@ import {
 export const revalidate = 300;
 
 export default async function HomePage() {
-  const [portraits, categories, stats, featured] = await Promise.all([
-    getHeroPortraits(),
+  const [people, categories, stats, featured] = await Promise.all([
+    getMarqueeCandidates(),
     getCategories(),
     getStats(),
     searchCandidates({ limit: 8, sort: "recent" }),
@@ -28,16 +28,17 @@ export default async function HomePage() {
   return (
     <>
       {/* ============================ HERO ============================ */}
-      <section className="relative lg:min-h-[880px]">
+      <section className="relative">
         <div className="yw-hero-bg" aria-hidden />
-        <HeroMosaicDesktop portraits={portraits} />
+
+        {/* Haqiqiy yoshlar portretlari — chapdan o'ngga suzuvchi karusel.
+            Ekran chetidan chetigacha yoyiladi (konteynerdan tashqarida). */}
+        <div className="yw-enter relative pt-5 lg:pt-12" style={{ animationDelay: "60ms" }}>
+          <HeroMarquee candidates={people} />
+        </div>
 
         <div className="yw-container relative">
-          <div className="pt-6 lg:hidden">
-            <HeroMosaicMobile portraits={portraits} />
-          </div>
-
-          <div className="mx-auto max-w-[680px] pb-14 pt-8 text-center lg:max-w-[620px] lg:pb-0 lg:pt-[430px]">
+          <div className="mx-auto max-w-[680px] pb-14 pt-10 text-center lg:max-w-[640px] lg:pb-16 lg:pt-16">
             <span className="yw-enter inline-block" style={{ animationDelay: "80ms" }}>
               <Eyebrow>Yoshlar ensiklopediyasi</Eyebrow>
             </span>
@@ -86,7 +87,7 @@ export default async function HomePage() {
       {/* ============ STATISTIKA — desktopda hero ostida ============== */}
       <section
         aria-label="Platforma statistikasi"
-        className="yw-container relative hidden lg:-mt-[86px] lg:block"
+        className="yw-container relative hidden lg:block"
       >
         <StatsBar stats={stats} />
       </section>

@@ -66,7 +66,7 @@ export function FilterBar({
   }, [term]);
 
   const selectClass =
-    "h-11 w-full rounded-[10px] border border-line bg-surface px-3.5 text-[14px] text-ink outline-none transition-colors hover:border-line-strong focus:border-accent-text";
+    "h-11 w-full rounded-[10px] border border-line bg-surface px-3.5 text-[16px] text-ink outline-none transition-colors hover:border-line-strong sm:text-[14px] focus:border-accent-text";
 
   return (
     <div className="rounded-card border border-line bg-surface p-3 sm:p-4">
@@ -82,7 +82,7 @@ export function FilterBar({
             onChange={(event) => setTerm(event.target.value)}
             placeholder="Ism, kasb, mutaxassislik yoki kalit soʻz…"
             aria-label="Yoshlar orasidan qidirish"
-            className="h-11 w-full rounded-[10px] border border-line bg-surface pl-11 pr-10 text-[14px] text-ink outline-none transition-colors focus:border-accent-text placeholder:text-ink-3"
+            className="h-11 w-full rounded-[10px] border border-line bg-surface pl-11 pr-10 text-[16px] text-ink outline-none sm:text-[14px] transition-colors focus:border-accent-text placeholder:text-ink-3"
           />
           {pending ? (
             <Loader2 className="absolute right-3.5 top-1/2 size-4 -translate-y-1/2 animate-spin text-ink-3" />

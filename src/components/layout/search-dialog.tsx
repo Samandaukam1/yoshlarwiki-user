@@ -119,15 +119,20 @@ export function SearchDialog({
     (results.candidates.length > 0 || results.categories.length > 0);
 
   return (
+    // Mobil: butun ekranni egallaydigan, tepaga yopishgan to'liq (shaffof
+    // bo'lmagan) varaq — orqadagi sahifa ko'rinmaydi, klaviatura ochilganda
+    // ham qidiruv maydoni joyidan siljimaydi.
+    // Desktop (sm+): avvalgidek markazdagi suzuvchi oyna.
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[12vh]"
+      className="fixed inset-0 z-[100] flex flex-col bg-bg [animation:yw-fade-in_0.18s_ease-out] sm:items-center sm:bg-transparent sm:px-4 sm:pt-[12vh]"
       onKeyDown={onKeyDown}
     >
       <button
         type="button"
         aria-label="Qidiruvni yopish"
+        tabIndex={-1}
         onClick={onClose}
-        className="absolute inset-0 cursor-default bg-ink/25 backdrop-blur-[2px]"
+        className="absolute inset-0 hidden cursor-default bg-ink/25 backdrop-blur-[2px] sm:block"
       />
 
       <div
@@ -135,34 +140,65 @@ export function SearchDialog({
         role="dialog"
         aria-modal="true"
         aria-label="Saytdan qidirish"
-        className="relative w-full max-w-xl overflow-hidden rounded-panel border border-line bg-surface shadow-yw-lg"
+        className="relative flex min-h-0 w-full flex-1 flex-col bg-bg sm:max-w-xl sm:flex-none sm:overflow-hidden sm:rounded-panel sm:border sm:border-line sm:bg-surface sm:shadow-yw-lg"
       >
-        <form onSubmit={submit} className="flex items-center gap-3 px-5 py-4">
-          <Search className="size-5 shrink-0 text-ink-3" strokeWidth={1.9} />
-          <input
-            ref={inputRef}
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            type="search"
-            placeholder="Nomzod, kasb yoki kategoriya qidiring…"
-            aria-label="Qidiruv soʻzi"
-            aria-controls={listId}
-            className="min-w-0 flex-1 bg-transparent text-[15px] text-ink outline-none placeholder:text-ink-3"
-          />
-          {loading ? (
-            <Loader2 className="size-4 animate-spin text-ink-3" />
-          ) : null}
+        <form
+          onSubmit={submit}
+          className="flex items-center gap-2 border-b border-line px-4 pb-3 pt-[calc(env(safe-area-inset-top)+12px)] sm:gap-3 sm:border-b-0 sm:px-5 sm:py-4"
+        >
+          <label className="flex h-12 min-w-0 flex-1 items-center gap-2.5 rounded-[14px] border border-line bg-surface px-3.5 transition-colors focus-within:border-accent-text sm:h-auto sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0">
+            <Search className="size-5 shrink-0 text-ink-3" strokeWidth={1.9} />
+            <input
+              ref={inputRef}
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              type="search"
+              enterKeyHint="search"
+              autoComplete="off"
+              placeholder="Ism, kasb yoki kategoriya…"
+              aria-label="Qidiruv soʻzi"
+              aria-controls={listId}
+              // 16px — iOS Safari maydonga fokus berilganda sahifani
+              // kattalashtirib (zoom) yubormasligi uchun.
+              className="yw-bare-input min-w-0 flex-1 bg-transparent text-[16px] text-ink outline-none placeholder:text-ink-3 sm:text-[15px] [&::-webkit-search-cancel-button]:appearance-none"
+            />
+            {loading ? (
+              <Loader2 className="size-4 shrink-0 animate-spin text-ink-3" />
+            ) : query ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  inputRef.current?.focus();
+                }}
+                aria-label="Qidiruvni tozalash"
+                className="grid size-6 shrink-0 place-items-center rounded-full bg-ink-3/25 text-ink-2 transition-colors hover:bg-ink-3/40 sm:hidden"
+              >
+                <X className="size-3.5" strokeWidth={2.4} />
+              </button>
+            ) : null}
+          </label>
+          <button
+            type="button"
+            onClick={onClose}
+            className="shrink-0 px-1.5 py-2 text-[15px] font-medium text-accent-text sm:hidden"
+          >
+            Bekor qilish
+          </button>
           <button
             type="button"
             onClick={onClose}
             aria-label="Yopish"
-            className="grid size-8 place-items-center rounded-lg text-ink-3 hover:bg-surface-hover hover:text-ink"
+            className="hidden size-8 place-items-center rounded-lg text-ink-3 hover:bg-surface-hover hover:text-ink sm:grid"
           >
             <X className="size-4" />
           </button>
         </form>
 
-        <div id={listId} className="max-h-[52vh] overflow-y-auto border-t border-line">
+        <div
+          id={listId}
+          className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)] sm:max-h-[52vh] sm:flex-none sm:border-t sm:border-line sm:pb-0"
+        >
           {!canSearch ? (
             <p className="px-5 py-8 text-center text-[13px] text-ink-3">
               Qidirish uchun kamida 2 ta harf kiriting.
